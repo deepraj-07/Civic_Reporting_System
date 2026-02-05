@@ -1,147 +1,169 @@
-# Civic Reporting System — Frontend
+# 🏙️ Civic Reporting System 
 
-A Next.js 15 (App Router, TypeScript) frontend for the Civic Reporting System. Citizens can report issues, track status, view leaderboards/achievements, and admins can manage submissions. The app communicates with the backend API over HTTP using cookie-based auth.
+A **modern, scalable frontend application** built with **Next.js 15 (App Router, TypeScript)** for the Civic Reporting System.  
+It empowers citizens to report civic issues, track their resolution, and view community activity, while enabling administrators to manage submissions efficiently.
 
----
-
-## Tech Stack
-
-- Next.js 15 (App Router)
-- React 18
-- TypeScript
-- Tailwind CSS v4 + PostCSS
-- Radix UI primitives and custom UI components
-- Axios (HTTP client)
+The application communicates with a backend REST API over **HTTP using secure cookie-based authentication**.
 
 ---
 
-## Prerequisites
+## ✨ What Makes This Project Unique
 
-- Node.js 18+ (recommend 20+)
-- pnpm (preferred) or npm/yarn
-- Running backend API (see sibling `civic-backend`) or a reachable public API URL
+- 🚀 Built on **Next.js 15 App Router** for future-proof routing
+- 🎨 Clean, accessible UI using **Radix UI primitives**
+- ⚡ Optimized performance with modular architecture
+- 🔐 Secure auth handling via cookies and middleware
+- 🧱 Scalable codebase suitable for real-world civic platforms
 
 ---
 
-## Quick Start
+## 👤 Citizen Features
 
-1. Install dependencies
+- Report civic issues with structured forms
+- Track issue status (Reported → In Progress → Resolved)
+- Browse publicly reported issues
+- View leaderboards & achievement badges *(UI-ready)*
 
+---
+
+## 🛠️ Admin Capabilities
+
+- Review and manage reported issues
+- Update issue statuses
+- Moderate submissions *(planned)*
+- Dashboard-ready architecture
+
+---
+
+## 🧰 Tech Stack
+
+### Frontend
+- **Next.js 15** (App Router)
+- **React 18**
+- **TypeScript**
+
+### Styling & UI
+- **Tailwind CSS v4**
+- **PostCSS**
+- **Radix UI primitives**
+- Custom reusable UI components
+
+### Networking & Data
+- **Axios** for API communication
+- Cookie-based authentication
+
+### Tooling
+- **pnpm / npm**
+- **ESLint**
+- **Git & GitHub**
+
+---
+
+## 📋 Prerequisites
+
+- **Node.js 18+** (Node 20+ recommended)
+- **pnpm** (preferred) or **npm / yarn**
+- A running backend API  
+  - Local: `civic-backend`  
+  - OR a reachable public API endpoint
+
+---
+
+## 🚀 Quick Start
+
+### Install Dependencies
 ```bash
 pnpm install
 # or
 npm install
-```
+---
+⚙️ Environment Configuration
 
-2. Configure environment
-   Create `.env.local` in the project root and set the API URL:
+Create a .env.local file in the project root:
 
-```bash
 # Base URL of the backend API
 NEXT_PUBLIC_API_URL=http://localhost:5000/api
-```
 
-If omitted, the app defaults to `http://localhost:5000/api` (see `lib/api.ts`).
 
-3. Run the dev server
+📌 If not provided, the app defaults to:
 
-```bash
+http://localhost:5000/api
+
+
+(see lib/api.ts)
+
+⚠️ Never commit .env.local to version control.
+
+▶️ Run the Development Server
 pnpm dev
 # or
 npm run dev
-```
 
-Then open http://localhost:3000.
 
+Open your browser at:
+👉 http://localhost:3000
+
+📂 Project Structure
+Civic_Reporting_System/
+├── app/                # App Router pages & layouts
+├── components/         # Reusable UI components
+│   └── ui/             # Radix / ShadCN-style primitives
+├── hooks/              # Custom React hooks
+├── lib/                # API clients, utils, auth helpers
+├── public/             # Static assets
+├── styles/             # Global styles
+├── middleware.ts       # Auth & route protection
+├── next.config.mjs
+├── package.json
+├── tsconfig.json
+└── README.md
 ---
+🔐 Authentication Model
 
-## Scripts
+Cookie-based authentication
 
-- `pnpm dev` — Start development server
-- `pnpm build` — Build for production
-- `pnpm start` — Start production server (after build)
-- `pnpm lint` — Run Next.js lint (build ignores lint/type errors per config)
+Credentials automatically included with requests
 
----
+Auth flow handled via:
 
-## Environment Variables
+lib/api.ts
 
-- `NEXT_PUBLIC_API_URL` — Base URL for API calls (e.g., `http://localhost:5000/api`). Defaults to that value if unset.
+middleware.ts
 
-Axios is configured in `lib/api.ts` with `withCredentials: true` so auth cookies are sent/received automatically.
+🧪 Available Scripts
+pnpm dev        # Start development server
+pnpm build      # Create production build
+pnpm start      # Run production server
+pnpm lint       # Lint the codebase
 
----
+🌐 Deployment
 
-## Authentication & Routing
+This frontend is deployment-ready and works best with:
 
-- Backend issues a JWT in an `access_token` cookie.
-- `middleware.ts` enforces access and role-based redirects:
-  - Unauthenticated users accessing protected routes are redirected to `/`.
-  - Authenticated users on `/` are redirected to `/admin` (ADMIN) or `/dashboard` (USER).
-  - Non-admin users are blocked from `/admin/*`.
-- Client-side `AuthProvider` in `lib/auth.tsx` exposes `login`, `logout`, `user`, and performs role-based redirects after login.
+Vercel ✅ (recommended)
 
----
+Netlify
 
-## Project Structure (high-level)
+Any Node.js-compatible hosting provider
 
-```
-app/
-  page.tsx
-  dashboard/
-  admin/
-  issue/[id]/
-  map/
-  my-reports/
-  profile/
-  report/
-  achievements/
-  leaderboard/
-components/
-  admin/ auth/ dashboard/ gamification/ issue-reporting/ navigation/ tracking/ ui/
-lib/
-  api.ts      # axios instance (uses NEXT_PUBLIC_API_URL, sends cookies)
-  auth.tsx    # AuthProvider and hook
-middleware.ts # route guards and role-based redirects
-styles/
-```
+Vercel Deployment Steps
 
----
+Import the GitHub repository
 
-## UI/Styling
+Add required environment variables
 
-- Tailwind CSS v4 with PostCSS
-- Radix primitives and custom components under `components/ui/*`
+Deploy 🚀
 
----
+🧠 Roadmap & Future Enhancements
 
-## Deployment
+Authentication pages (login / register)
 
-Works on Vercel or any Node host.
+Role-based access control (RBAC)
 
-Vercel (recommended):
+Location-based issue mapping
 
-- Configure `NEXT_PUBLIC_API_URL` in Project → Settings → Environment Variables
-- Build: `pnpm build` (or `npm run build`)
-- Output: Next.js default
+Notification system (email / push)
 
-Self-host:
+Admin analytics dashboard
 
-```bash
-pnpm build
-pnpm start
-# Listens on PORT (default 3000)
-```
-
-Ensure the API is reachable and configured for CORS with credentials.
-
----
-
-## Notes
-
-- If the frontend and backend are on different domains, configure backend cookies for cross-site usage (e.g., `SameSite=None; Secure`) and enable CORS with credentials.
-- `next.config.mjs` is set to ignore lint/type errors during build; consider tightening for production.
-
----
-
-
+Automated testing & CI/CD pipelines
